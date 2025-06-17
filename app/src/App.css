@@ -1,3 +1,11 @@
+/* body, html, #root {
+  background: transparent;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+
+
 .logo.vite:hover {
   filter: drop-shadow(0 0 2em #747bff);
 }
@@ -28,6 +36,8 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  background: transparent;
+
 }
 
 .logo {
@@ -98,7 +108,6 @@ button {
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;
-    background-color: #2f2f2f;
   }
 
   a:hover {
@@ -113,4 +122,4 @@ button {
   button:active {
     background-color: #0f0f0f69;
   }
-}
+} */
