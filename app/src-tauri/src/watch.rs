@@ -1,8 +1,6 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use std::{fs, io::Read, path::Path, sync::{Arc, Mutex}};
-use tauri::{
- AppHandle, Manager
-};
+
 // use tauri::tray::{TrayIconEvent, MouseButton, MouseButtonState};
 
 use base64::{engine::general_purpose, Engine};
@@ -107,15 +105,17 @@ pub fn rename_file(file_to_edit: &Path, new_file_name: &String){
 
 
 
-pub fn watch_screenshots( paused_state: Arc<Mutex<bool>>, ) -> notify::Result<()> {
-
-// pub fn watch_screenshots<F>(
-//     paused_state: Arc<Mutex<bool>>,
-//     mut on_rename: F,
-// ) -> notify::Result<()>
-// where
-//     F: FnMut(&str) + Send + 'static,
-// {
+// A long running function that watches the user's Desktop for new screenshots.
+// When a screenshot is detected and renamed the provided callback will be
+// executed with the new file name. This allows the caller to react to the event
+// without blocking this thread.
+pub fn watch_screenshots<F>(
+    paused_state: Arc<Mutex<bool>>,
+    mut on_rename: F,
+) -> notify::Result<()>
+where
+    F: FnMut(&str) + Send + 'static,
+{
 dotenv().ok();
     let key = env::var("OPENAI_API_KEY").expect("API key not found");
     println!("Using OpenAI key: {}", &key[..6]);
@@ -190,8 +190,7 @@ dotenv().ok();
                     println!("📁 Suggested name: {}", name);
 
                     rename_file(&path, &name);
-                    // on_rename(&name);
-                    // notify_user(&name, &app_handle);
+                    on_rename(&name);
                 }
             }
             Ok(Err(e)) => println!("❌ Watch error: {:?}", e),
