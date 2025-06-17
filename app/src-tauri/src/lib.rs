@@ -9,6 +9,7 @@ use tauri_plugin_positioner::{Position, WindowExt};
 use tauri::Emitter;
 use std::env;
 use crate::watch::watch_screenshots;
+use serde_json::json;
 mod watch;
 mod state;
 use state::AppState;
@@ -52,10 +53,20 @@ pub fn run() {
         };
         app.manage(state.clone());
 
+        // Spawn the screenshot watcher on a separate thread. Whenever a file is
+        // renamed we emit an event so the frontend can display a notification.
         std::thread::spawn({
-            let paused_state = state.paused.clone(); // clone Arc for thread
+            let paused_state = state.paused.clone();
+            let app_handle = app.handle();
             move || {
-                if let Err(e) = watch_screenshots(paused_state) {
+                if let Err(e) = watch_screenshots(paused_state, |name| {
+                    if let Err(e) = app_handle.emit_all(
+                        "screenshot-renamed",
+                        json!({ "name": name }),
+                    ) {
+                        eprintln!("❌ Failed to emit screenshot-renamed event: {}", e);
+                    }
+                }) {
                     eprintln!("❌ Error in watcher: {:?}", e);
                 }
             }
