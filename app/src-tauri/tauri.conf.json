@@ -15,7 +15,7 @@
     "windows": [
       {
         "transparent": true,
-        "title": "app",
+        "title": "SnapName",
         "width": 320,
         "height": 240,
         "visible": true,
