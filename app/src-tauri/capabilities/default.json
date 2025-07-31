@@ -9,6 +9,9 @@
     "core:default",
     "opener:default",
     "notification:default",
-    "log:default"
+    "log:default",
+    "dialog:default",
+    "dialog:allow-open"
+
   ]
 }

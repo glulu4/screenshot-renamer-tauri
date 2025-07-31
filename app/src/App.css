@@ -5,18 +5,7 @@ h1, h2, h3, h4, h5, h6, input, button, a, label, span, p, div {
 
 
 
-.menu-container {
-  padding: 5px;
-  /* backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
-  padding: 16px;
-  width: 260px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif; */
-}
+
 
 .line-divider{
   height: 0.8px;
@@ -28,13 +17,18 @@ h1, h2, h3, h4, h5, h6, input, button, a, label, span, p, div {
 .title {
   font-weight: 600;
   font-size: 13px;
-  margin-bottom: 12px;
   color: black;
+}
+
+.pro-badge {
+  font-weight: 600;
+  font-size: 10px;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
+  
   border-radius: 12px;
   transition: background 0.2s ease;
   padding-left: 8px;
@@ -59,6 +53,14 @@ h1, h2, h3, h4, h5, h6, input, button, a, label, span, p, div {
   margin-right: 12px;
 }
 
+.folder-button {
+  transition: background-color 1s ease, border-radius 1s ease;
+}
+
+.folder-button:hover {
+  background-color: rgba(60, 60, 67, 0.18);
+  border-radius: 50%;
+}
 
 .text{
   font-size: 13px;
